@@ -75,7 +75,7 @@ $query_builder = TRUE;
 
 $db['readdb'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
+	'hostname' => '127.0.0.1',
 	'username' => 'root',
 	'password' => 'hjz123459',
 	'database' => 'd_hjzproject',

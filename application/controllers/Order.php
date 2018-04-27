@@ -16,7 +16,7 @@ class Order extends MY_Controller
 
     public function index()
     {
-        $data = $this->db->select('*')->from('t_adminer_0')->get()->result_array();
+        $data = $this->readdb->select('*')->from('t_adminer_0')->get()->result_array();
         print_r($data);
         echo '预订单列表';
     }
