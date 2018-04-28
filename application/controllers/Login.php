@@ -14,7 +14,6 @@ class Login extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
-        $this->load->helper('cookie_helper');
         $this->readdb = $this->load->database('readdb', TRUE);
         $this->load->model('Adminer_model');
     }
@@ -46,13 +45,6 @@ class Login extends CI_Controller
                 echo json_encode($return_array);
                 exit();
             } else {
-                $session_data = array(
-                    'userAccount' => $userAccount,
-                    'adminerId'   => $user_data['adminerId'],
-                    'loginTime'   => time(),
-                    'rd_session'  => $this->create_noncestr()
-                );
-                $this->session->set_userdata($session_data);
                 $return_array = array(
                     'status' => 0,
                     'msg'    => '登录成功',
@@ -81,7 +73,6 @@ class Login extends CI_Controller
      */
     public function logout()
     {
-        $this->session->sess_destory();
         $return_array = array(
             'status' => 0,
             'msg'    => '退出成功',
