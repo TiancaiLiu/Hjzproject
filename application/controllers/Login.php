@@ -46,7 +46,6 @@ class Login extends CI_Controller
                 echo json_encode($return_array);
                 exit();
             } else {
-                /*
                 $session_data = array(
                     'userAccount' => $userAccount,
                     'adminerId'   => $user_data['adminerId'],
@@ -54,10 +53,6 @@ class Login extends CI_Controller
                     'rd_session'  => $this->create_noncestr()
                 );
                 $this->session->set_userdata($session_data);
-                */
-                $this->input->set_cookie('userAccount', $userAccount, 3600);
-                $this->input->set_cookie('adminerId', $user_data['adminerId'], 3600);
-                $this->input->set_cookie('rd_session', $this->create_noncestr(), 3600);
                 $return_array = array(
                     'status' => 0,
                     'msg'    => '登录成功',
@@ -86,9 +81,7 @@ class Login extends CI_Controller
      */
     public function logout()
     {
-        delete_cookie('userAccount');
-        delete_cookie('adminerId');
-        delete_cookie('rd_session');
+        $this->session->sess_destory();
         $return_array = array(
             'status' => 0,
             'msg'    => '退出成功',
