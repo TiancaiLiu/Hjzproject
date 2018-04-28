@@ -13,8 +13,8 @@ class Login extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        //$this->load->database();
-        //$this->readdb = $this->load->database('readdb', TRUE);
+        $this->load->database();
+        $this->readdb = $this->load->database('readdb', TRUE);
         $this->load->model('Adminer_model');
     }
 
