@@ -14,6 +14,7 @@ class Login extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
+        $this->load->helper('cookie_helper');
         $this->readdb = $this->load->database('readdb', TRUE);
         $this->load->model('Adminer_model');
     }
@@ -85,7 +86,9 @@ class Login extends CI_Controller
      */
     public function logout()
     {
-        $this->session->sess_destroy();
+        delete_cookie('userAccount');
+        delete_cookie('adminerId');
+        delete_cookie('rd_session');
         $return_array = array(
             'status' => 0,
             'msg'    => '退出成功',
