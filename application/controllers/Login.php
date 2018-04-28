@@ -57,7 +57,7 @@ class Login extends CI_Controller
                 $this->session->set_userdata($session_data);
                 $return_array = array(
                     'status' => 0,
-                    'msg'    => 登录成功,
+                    'msg'    => '登录成功',
                 );
                 echo json_encode($return_array);
                 exit();
