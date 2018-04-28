@@ -13,9 +13,21 @@
 function get_json_format_data()
 {
     $input_data = json_decode(trim(file_get_contents('php://input')), TRUE);
-    if(empty($input_data)) {
+    if (empty($input_data)) {
+        $url = strtolower($_SERVER['HTTP_HOST']);
+        $CI = &get_instance();
+
+        if ($url == 'www.hejizhen.cn') {
+            $input_data = $CI->input->get();
+
+            if (empty($input_data)) {
+                $input_data = $CI->input->post();
+            }
+        }
+    } else {
         return array();
     }
+
     return $input_data;
 }
 
