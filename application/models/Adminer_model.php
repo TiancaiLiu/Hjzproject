@@ -7,7 +7,7 @@
  */
 if (! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Adminer__model extends CI_Model
+class Adminer_model extends CI_Model
 {
     function __construct()
     {
