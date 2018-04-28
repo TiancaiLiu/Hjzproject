@@ -28,9 +28,6 @@ class Login extends CI_Controller
         $userAccount = $frm['userAccount'];
         $password = md5(trim($frm['password']));
         $user_data = $this->Adminer_model->get_adminer_by_account($userAccount);
-        if (!isset($_SESSION)) {
-            session_start();
-        }
         if (empty($user_data)) {
             $return_array = array(
                 'status' => -1,
@@ -76,5 +73,19 @@ class Login extends CI_Controller
             $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
         }
         return $str;
+    }
+
+    /**
+     *  退出登录
+     */
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        $return_array = array(
+            'status' => 0,
+            'msg'    => '退出成功',
+        );
+        echo json_encode($return_array);
+        exit();
     }
 }
