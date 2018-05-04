@@ -51,3 +51,26 @@ function requires_input($keys)
         }
     }
 }
+
+/**
+ * 数据库查询结果转换 (删除key的"c_"前缀)
+ * @param 数揣 $data
+ * @return unknown|multitype:unknown
+ */
+function trans_db_result($data)
+{
+    if(empty($data)) return $data;
+    $ret = array();
+    foreach ($data as $key => $value) {
+        if(is_array($value))
+        {
+            $arr = trans_db_result($value);
+            $tmp_key = strpos($key, DB_PREFIX_COLUMN) === 0 ? substr($key, strlen(DB_PREFIX_COLUMN)) : $key;
+            $ret[$tmp_key] = $arr;
+        } else {
+            $tmp_key = strpos($key, DB_PREFIX_COLUMN) === 0 ? substr($key, strlen(DB_PREFIX_COLUMN)) : $key;
+            $ret[$tmp_key] = $value;
+        }
+    }
+    return $ret;
+}
