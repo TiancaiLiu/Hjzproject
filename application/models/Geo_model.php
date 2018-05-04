@@ -13,6 +13,7 @@ class Geo_model extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->readdb = $this->load->database('readdb', TRUE);
     }
 
     /**

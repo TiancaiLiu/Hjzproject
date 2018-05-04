@@ -65,10 +65,10 @@ function trans_db_result($data)
         if(is_array($value))
         {
             $arr = trans_db_result($value);
-            $tmp_key = strpos($key, DB_PREFIX_COLUMN) === 0 ? substr($key, strlen(DB_PREFIX_COLUMN)) : $key;
+            $tmp_key = strpos($key, 'c_') === 0 ? substr($key, strlen('c_')) : $key;
             $ret[$tmp_key] = $arr;
         } else {
-            $tmp_key = strpos($key, DB_PREFIX_COLUMN) === 0 ? substr($key, strlen(DB_PREFIX_COLUMN)) : $key;
+            $tmp_key = strpos($key, 'c_') === 0 ? substr($key, strlen('c_')) : $key;
             $ret[$tmp_key] = $value;
         }
     }
