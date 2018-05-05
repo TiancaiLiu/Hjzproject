@@ -14,10 +14,11 @@ class Geo extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Geo_model');
+        $this->load->model('Apartment_model');
     }
 
     /**
-     * 获取所有城市列表
+     * 获取所有城市列表(前端调用接口)
      * @return array 城市列表
      */
     public function all_city_list()
@@ -89,5 +90,30 @@ class Geo extends CI_Controller
         }
 
         return array_values($province_list);
+    }
+
+    /**
+     *  获取所有公寓列表(后端接口)
+     */
+    public function get_apartment_list()
+    {
+        //读数据内容，打包吐给前端
+        $apartment_info = $this->Apartment_model->get_apartment_list();
+        if (!empty($apartment_info)) {
+            $return_data = array(
+                'status' => -1,
+                'msg'    => '暂无数据'
+            );
+            echo json_encode($return_data);
+            exit();
+        } else {
+            $return_data = array(
+                'status'  => 0,
+                'msg'     => '成功',
+                'data'    => $apartment_info
+            );
+            echo json_encode($return_data);
+            exit();
+        }
     }
 }
