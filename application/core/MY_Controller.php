@@ -14,5 +14,18 @@ class MY_Controller extends CI_Controller
         parent::__construct();
         $this->load->database();
         $this->readdb = $this->load->database('readdb', TRUE);
+
+        $rd_session = $this->input->post('rd_session');
+        if(empty($rd_session)) {
+            $rd_session = $this->input->get('rd_session');
+        }
+        if (empty($rd_session)) {
+            $return_data = array(
+                'status' => -10,
+                'msg'    => '账号未登录'
+            );
+            echo json_encode($return_data);
+            exit();
+        }
     }
 }
