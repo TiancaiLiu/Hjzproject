@@ -182,7 +182,7 @@ class Geo extends MY_Controller
     {
         requires_input(array('apartment_id', 'name', 'contact_phone', 'contact_telephone', 'address', 'amenity_str', 'apartment_type', 'is_online_apartment'));
         $apartment_data = get_json_format_data();
-        $apartment_info['c_apartment_id'] = $apartment_data['apartment_id'];
+        $apartment_id = $apartment_data['apartment_id'];
         $apartment_info['c_is_test'] = isset($apartment_data['is_test']) ? intval($apartment_data['is_test']) : 0;
         $apartment_info['c_is_franchise'] = isset($apartment_data['is_franchise']) ? intval($apartment_data['is_franchise']) : 0;
         $apartment_info['c_apartment_type'] = $apartment_data['apartment_type'];
@@ -196,14 +196,14 @@ class Geo extends MY_Controller
         $apartment_info['c_tips'] = isset($apartment_data['tips']) ? $apartment_data['tips'] : '';
         $apartment_info['c_create_time'] = time();
 
-        $this->readdb->where('c_apartment_id', $apartment_info['c_apartment_id']);
+        $this->readdb->where('c_apartment_id', $apartment_id);
         $this->readdb->update('t_apartment_0', $apartment_info);
 
         if($this->readdb->affected_rows()) {
             $return_data = array(
                 'status' => 0,
                 'msg'    => '更新成功',
-                'data'   => array('apartment_id' => $apartment_info['c_apartment_id'])
+                'data'   => array('apartment_id' => $apartment_id)
             );
             echo json_encode($return_data);
             exit();
