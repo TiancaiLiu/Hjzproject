@@ -93,13 +93,21 @@ class Geo extends MY_Controller
     }
 
     /**
-     *  获取所有公寓列表(后端接口)
+     *  分页获取所有公寓列表(后端接口)
      */
     public function get_apartment_list()
     {
-        //读数据内容，打包吐给前端
-        $apartment_info = $this->Apartment_model->get_apartment_list();
-        if (!empty($apartment_info)) {
+        $page_index = isset($_GET['page_index']) ? intval($_GET['page_index']) : 1;
+        $page_size = isset($_GET['page_size']) ? intval($_GET['page_size']) : 10;
+        $status = isset($_GET['status']) ? intval($_GET['status']) : NULL;
+        $name = isset($_GET['name']) ? $_GET['name'] : NULL; // 公寓名搜索
+
+        if($page_index < 1 || $page_size <= 0) {
+            throw new Exception("参数异常", -1);
+        }
+        $params = array("status"=>$status, "name"=>$name, "page_index"=>$page_index, "page_size"=>$page_size);
+        $data = $this->Apartment_model->get_batch_apartment($params);
+        if (empty($data)) {
             $return_data = array(
                 'status' => -1,
                 'msg'    => '暂无数据'
@@ -110,7 +118,7 @@ class Geo extends MY_Controller
             $return_data = array(
                 'status'  => 0,
                 'msg'     => '成功',
-                'data'    => $apartment_info
+                'data'    => $data
             );
             echo json_encode($return_data);
             exit();

@@ -74,3 +74,14 @@ function trans_db_result($data)
     }
     return $ret;
 }
+
+function str_to_array($str, $column = "") {
+    if(empty($str)) {
+        return array();
+    }
+    $ret_arr = json_decode($str, TRUE);
+    if(!empty($column)) {
+        return array_column($ret_arr, $column);
+    }
+    return $ret_arr;
+}
