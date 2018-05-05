@@ -72,4 +72,19 @@ class Apartment_model extends CI_Model
         return $ret;
     }
 
+    /**
+     * ##获取公寓设施##
+     * @param unknown $dic_type
+     * @param unknown $limit
+     * @param unknown $offset
+     * @return multitype:
+     */
+    public function get_dictionary_list()
+    {
+        $sql = "select c_dictionary_id,c_number,c_name,c_type,c_icon,c_create_time from t_dictionary_0 where c_type=3 and c_status=0 order by c_create_time desc";
+        $query = $this->readdb->query($sql);
+        $ret = $query ? $query->result_array() : array();
+        return trans_db_result($ret);
+    }
+
 }

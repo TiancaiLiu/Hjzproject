@@ -124,4 +124,57 @@ class Geo extends MY_Controller
             exit();
         }
     }
+
+    /**
+     *  新建公寓
+     */
+    public function new_apartment()
+    {
+        requires_input(array('name', 'contact_phone', 'contact_telephone', 'address', 'amenity_str', 'apartment_type', 'is_online_apartment'));
+        $apartment_data = get_json_format_data();
+        $apartment_info['c_is_test'] = isset($apartment_data['is_test']) ? intval($apartment_data['is_test']) : 0;
+        $apartment_info['c_is_franchise'] = isset($apartment_data['is_franchise']) ? intval($apartment_data['is_franchise']) : 0;
+        $apartment_info['c_apartment_type'] = $apartment_data['apartment_type'];
+        $apartment_info['c_name'] = $apartment_data['name'];
+        $apartment_info['c_contact_telephone'] = $apartment_data['contact_telephone'];
+        $apartment_info['c_contact_phone'] = $apartment_data['contact_phone'];
+        $apartment_info['c_contact_name'] = isset($apartment_data['contact_name']) ? $apartment_data['contact_name'] : '';
+        $apartment_info['c_address'] = $apartment_data['address'];
+        $apartment_info['c_amenity_str'] = $apartment_data['amenity_str'];
+        $apartment_info['c_desc'] = isset($apartment_data['desc']) ? $apartment_data['desc'] : '';
+        $apartment_info['c_tips'] = isset($apartment_data['tips']) ? $apartment_data['tips'] : '';
+        $apartment_info['c_create_time'] = time();
+
+        $this->readdb->insert('t_apartment_0', $apartment_info);
+        $apartment_id = $this->readdb->insert_id();
+
+        if ($apartment_id) {
+            $return_data = array(
+                'status' => 0,
+                'msg'    => '成功',
+                'data'   => array('apartment_id' => $apartment_id)
+            );
+            echo json_encode($return_data);
+            exit();
+        } else {
+            $return_data = array(
+                'status' => -1,
+                'msg'    => '新建公寓失败'
+            );
+            echo json_encode($return_data);
+            exit();
+        }
+    }
+
+    public function get_apartment_amenity_list()
+    {
+        $list = $this->Apartment_model->get_dictionary_list();
+        $return_data = array(
+            'status'    => 0,
+            'msg'       => 'success',
+            'data'      => $list
+        );
+        echo json_encode($return_data);
+        exit();
+    }
 }
