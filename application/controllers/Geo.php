@@ -8,7 +8,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Geo extends CI_Controller
+class Geo extends MY_Controller
 {
     public function __construct()
     {
