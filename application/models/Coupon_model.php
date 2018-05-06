@@ -39,9 +39,9 @@ class Coupon_model extends CI_Model
         $limit = $page_size;
 
         if($status == NULL) {
-            $this->readdb->where(array('c_status !=' => 9));
+            $this->readdb->where(array('is_enable !=' => 9));
         } else {
-            $this->readdb->where(array('c_status' => $status));
+            $this->readdb->where(array('is_enable' => $status));
         }
 
         $coupon_info = $this->get_coupon_list();
