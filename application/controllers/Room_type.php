@@ -29,7 +29,7 @@ class Room_type extends CI_Controller
             throw new Exception("参数异常", -1);
         }
         $params = array("status"=>$status, "page_index"=>$page_index, "page_size"=>$page_size);
-        $data = $this->Room_type_model->get_batch_apartment($params);
+        $data = $this->Room_type_model->get_batch_room_type($params);
         if (empty($data)) {
             $return_data = array(
                 'status' => -1,

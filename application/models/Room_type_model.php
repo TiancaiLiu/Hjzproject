@@ -26,7 +26,7 @@ class Room_type_model extends CI_Model
      * 分页获取房型列表
      * @return array
      */
-    public function get_batch_apartment($params)
+    public function get_batch_room_type($params)
     {
         $page_size = $params['page_size'];
         $page_index = $params['page_index'];
@@ -55,6 +55,10 @@ class Room_type_model extends CI_Model
                 ->order_by("c_room_type_id desc")
                 ->get()
                 ->result_array());
+            foreach ($ret['list'] as &$room_type_info) {
+                $room_type_info['apartment_name'] = $this->Common_model->get_one('readdb', 't_apartment_0', 'c_name', array('c_apartment_id'=>$room_type_info['apartment_id'])['c_name']);
+                unset($room_type_info['apartment_id']);
+            }
         } else {
             $ret['row_count'] = 0;
             $ret['page_count'] = 0;
