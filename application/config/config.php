@@ -521,3 +521,8 @@ $config['rewrite_short_tags'] = FALSE;
 | Array:		array('10.0.1.200', '192.168.5.0/24')
 */
 $config['proxy_ips'] = '';
+
+$config['wxSmallPayConfig'] = array(
+    'APPID' => 'wx3faf0903e409b6c3',
+    'APPSECRET' => '3dab56e73f678596d55d5fb01a1b307a'
+);
