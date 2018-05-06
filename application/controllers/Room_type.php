@@ -48,4 +48,30 @@ class Room_type extends CI_Controller
         }
     }
 
+    /**
+     * ##更新房型状态状态##
+     * @throws Exception
+     */
+    public function update_room_type_status() {
+        requires_input(array('c_room_type_id', 'status'));
+        $room_type_data = get_json_format_data();
+        $room_type_id = intval($room_type_data['apartment_id']);
+        $status = intval($room_type_data['status']);
+
+        if($room_type_id <= 0 || !in_array($status, array(0, 1))) {
+            throw new Exception("参数异常", -10);
+        }
+        $ret = $this->Common_model->update('readdb', 't_room_type_0', array("c_status" => $status), array("c_room_type_id" => $room_type_id));
+        if($ret) {
+            $return_data = array(
+                'status'    => 0,
+                'msg'       => '成功'
+            );
+            echo json_encode($return_data);
+            exit();
+        } else {
+            throw new Exception("数据库异常", -10);
+        }
+    }
+
 }
