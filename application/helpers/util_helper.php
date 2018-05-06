@@ -85,3 +85,20 @@ function str_to_array($str, $column = "") {
     }
     return $ret_arr;
 }
+
+function curl_get($url)
+{
+    $userId = empty($_COOKIE['userid']) ? null : intval($_COOKIE['userid']);
+    $skey = empty($_COOKIE['skey']) ? null : urlencode($_COOKIE['skey']);
+    $cookie = "userid=".$userId."; skey=".$skey;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HEADER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_COOKIE, $cookie);
+    $contents = curl_exec($ch);
+    $auth_data = json_decode($contents, true);
+    curl_close($ch);
+    return $auth_data;
+}

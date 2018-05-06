@@ -15,7 +15,7 @@ class MY_Controller extends CI_Controller
         $this->load->database();
         $this->readdb = $this->load->database('readdb', TRUE);
 
-        $rd_session = $this->input->post('rd_session');
+        /*$rd_session = $this->input->post('rd_session');
         if(empty($rd_session)) {
             $rd_session = $this->input->get('rd_session');
         }
@@ -26,6 +26,6 @@ class MY_Controller extends CI_Controller
             );
             echo json_encode($return_data);
             exit();
-        }
+        }*/
     }
 }
