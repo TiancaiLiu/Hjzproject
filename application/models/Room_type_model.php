@@ -46,7 +46,7 @@ class Room_type_model extends CI_Model
 
         $room_type_info = $this->get_room_type_list();
         $room_type_ids = array_column($room_type_info, "c_room_type_id");
-        if(!empty($apartment_ids)) {
+        if(!empty($room_type_ids)) {
             $this->readdb->where_in('c_room_type_id', $room_type_ids);
             $ret['row_count'] = $this->readdb->count_all_results('t_room_type_0', FALSE);
             $ret['page_count'] = ceil($ret['row_count'] / $params['page_size']);
