@@ -178,6 +178,9 @@ class Geo extends MY_Controller
         exit();
     }
 
+    /**
+     * 编辑公寓
+     */
     public function update_apartment()
     {
         requires_input(array('apartment_id', 'name', 'contact_phone', 'contact_telephone', 'address', 'amenity_str', 'apartment_type', 'is_online_apartment'));
@@ -194,6 +197,10 @@ class Geo extends MY_Controller
         $apartment_info['c_amenity_str'] = $apartment_data['amenity_str'];
         $apartment_info['c_desc'] = isset($apartment_data['desc']) ? $apartment_data['desc'] : '';
         $apartment_info['c_tips'] = isset($apartment_data['tips']) ? $apartment_data['tips'] : '';
+        $apartment_info['c_country_id'] = isset($apartment_data['country_id']) ? $apartment_data['country_id'] : 1;
+        $apartment_info['c_province_id'] = isset($apartment_data['province_id']) ? $apartment_data['country_id'] : 2000;
+        $apartment_info['c_city_id'] = isset($apartment_data['city_id']) ? $apartment_data['city_id'] : 2003;
+        $apartment_info['c_district_id'] = isset($apartment_data['district_id']) ? $apartment_data['c_district_id'] : 20030002;
         $apartment_info['c_create_time'] = time();
 
         $this->readdb->where('c_apartment_id', $apartment_id);
@@ -214,6 +221,47 @@ class Geo extends MY_Controller
             );
             echo json_encode($return_data);
             exit();
+        }
+    }
+
+    /**
+     * 根据id获取公寓信息
+     */
+    public function get_apartment()
+    {
+        $apartment_id = isset($_GET['apartment_id']) ? intval($_GET['apartment_id']) : 0;
+        if($apartment_id <= 0) {
+            throw new Exception("参数异常", -10);
+        }
+
+        $apartment_info = $this->Common_model->get_one('readdb', 't_apartment_0', "*", array("c_apartment_id" => $apartment_id));
+        echo json_encode($apartment_info);
+        exit();
+    }
+
+    /**
+     * ##更新公寓状态##
+     * @throws Exception
+     */
+    public function update_apartment_status() {
+        requires_input(array('apartment_id', 'status'));
+        $apartment_data = get_json_format_data();
+        $apartment_id = intval($apartment_data['apartment_id']);
+        $status = intval($apartment_data['status']);
+
+        if($apartment_id <= 0 || !in_array($status, array(0, 1))) {
+            throw new Exception("参数异常", -10);
+        }
+        $ret = $this->Common_model->update('readdb', 't_apartment_0', array("c_status" => $status), array("c_apartment_id" => $apartment_id));
+        if($ret) {
+            $return_data = array(
+                'status'    => 0,
+                'msg'       => '禁用成功'
+            );
+            echo json_encode($return_data);
+            exit();
+        } else {
+            throw new Exception("数据库异常", -10);
         }
     }
 }
