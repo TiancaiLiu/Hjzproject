@@ -22,8 +22,8 @@ class Wechat extends CI_Controller
     {
         $config = config_item('wxSmallPayConfig');
         requires_input(array('code'));
-        $apartment_data = get_json_format_data();
-        $code_api = "https://api.weixin.qq.com/sns/jscode2session?appid=". $config['APPID'] ."&secret=". $config['APPSECRET'] ."&js_code=". $js_code ."&grant_type=authorization_code";
+        $frm = get_json_format_data();
+        $code_api = "https://api.weixin.qq.com/sns/jscode2session?appid=". $config['APPID'] ."&secret=". $config['APPSECRET'] ."&js_code=". $frm['code'] ."&grant_type=authorization_code";
         $ret_arr = curl_get($code_api);
 
         if (empty($ret_arr['openid']) || empty($ret_arr['session_key'])) {
