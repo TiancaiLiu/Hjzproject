@@ -56,7 +56,7 @@ class Room_type_model extends CI_Model
                 ->get()
                 ->result_array());
             foreach ($ret['list'] as &$room_type_info) {
-                $room_type_info['apartment_name'] = $this->Common_model->get_one('readdb', 't_apartment_0', 'c_name', array('c_apartment_id'=>$room_type_info['apartment_id'])['c_name']);
+                $room_type_info['apartment_name'] = $this->Common_model->get_one('readdb', 't_apartment_0', 'c_name', array('c_apartment_id'=>$room_type_info['apartment_id']))['c_name'];
                 unset($room_type_info['apartment_id']);
             }
         } else {
