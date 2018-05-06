@@ -13,12 +13,13 @@ class Room_type extends CI_Controller
     {
         parent::__construct();
         $this->readdb = $this->load->database('readdb', TRUE);
+        $this->load->model('Room_type_model');
     }
 
     /**
      *  分页获取所有公寓列表(后端接口)
      */
-    public function get_apartment_list()
+    public function get_room_type_list()
     {
         $page_index = isset($_GET['page_index']) ? intval($_GET['page_index']) : 1;
         $page_size = isset($_GET['page_size']) ? intval($_GET['page_size']) : 10;
