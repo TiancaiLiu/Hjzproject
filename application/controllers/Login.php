@@ -48,7 +48,8 @@ class Login extends CI_Controller
                 $return_array = array(
                     'status' => 0,
                     'msg'    => '登录成功',
-                    'rd_session'   => md5($userAccount)
+                    'rd_session'   => md5($userAccount),
+                    'user'  => $userAccount,
                 );
                 echo json_encode($return_array);
                 exit();
