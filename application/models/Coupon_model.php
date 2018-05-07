@@ -23,7 +23,7 @@ class Coupon_model extends CI_Model
     }
 
     /**
-     * 分页获取房型列表
+     * 分页获取优惠券列表
      * @return array
      */
     public function get_batch_coupon($params)
