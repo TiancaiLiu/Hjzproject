@@ -83,8 +83,24 @@ class Room_type extends CI_Controller
         requires_input(array('city_id'));
         $city_id = $input['city_id'];
 
-        $apartment_room_info = $this->Room_type_model->wx_get_room_type_list(2001);
+        $apartment_room_info = $this->Room_type_model->wx_get_room_type_list($city_id);
 
+        if (!empty($apartment_room_info)) {
+            $return_data = array(
+                'status'   => 0,
+                'msg'     => '成功',
+                'data'    => $apartment_room_info
+            );
+            echo json_encode($return_data);
+            exit();
+        } else {
+            $return_data = array(
+                'status'   => 0,
+                'msg'     => '暂无数据'
+            );
+            echo json_encode($return_data);
+            exit();
+        }
     }
 
 }

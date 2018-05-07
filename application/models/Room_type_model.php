@@ -72,14 +72,17 @@ class Room_type_model extends CI_Model
      */
     public function wx_get_room_type_list($city_id)
     {
-        $this->readdb->select('apartment.c_apartment_id,apartment.c_name as apartment_name,apartment_id.c_city_id,room_type.c_room_type_id,room_type.c_name as room_type_name,room_type.c_max_area,room_type.c_bedroom_count,room_type.c_bed_count,room_type.c_comment_avg_score,room_type.c_base_price');
+        $this->readdb->select('apartment.c_apartment_id,apartment.c_name as apartment_name,apartment.c_city_id,room_type.c_room_type_id,room_type.c_name as room_type_name,room_type.c_max_area,room_type.c_bedroom_count,room_type.c_bed_count,room_type.c_comment_avg_score,room_type.c_base_price');
         $this->readdb->from('t_room_type_0 as room_type');
         $this->readdb->join('t_apartment_0 as apartment', 'room_type.c_apartment_id=apartment.c_apartment_id', 'left');
-        $this->readb->join('t_city_0 as city','apartment.c_city_id=city.c_city_id','left');
+        $this->readdb->join('t_city_0 as city','apartment.c_city_id=city.c_city_id','left');
         $this->readdb->where('apartment.c_city_id', $city_id);
         $apartment_info = $this->readdb->get()->result_array();
+        foreach ($apartment_info as &$apartment) {
+            $apartment['c_image_list'] = array_column($this->Common_model->get('readdb', 't_room_type_image_0', '*',array('c_room_type_id'=>$apartment['c_room_type_id'])),"c_image_url");
+        }
 
-        print_r($apartment_info);die;
+        return $apartment_info;
 
     }
 }
