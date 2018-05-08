@@ -37,33 +37,43 @@ class Wechat extends CI_Controller
             'ctime'     => time()
         );
 
-        $this->readdb->insert('user', $user_data);
-        $userId = $this->readdb->insert_id();
-        if (!$userId) {
+        $is_exist = $this->Common_model->get_one('readdb', 'user', '*', array('openid'=>$openid));
+
+        if (!empty($is_exist)) {
             $return_data = array(
-                'status'    => -1,
-                'msg'       => '用户绑定失败'
+                'status'    => 0,
+                'msg'       => '登录成功',
+                'data'      => array('openid'=> $openid)
             );
             echo json_encode($return_data);
             exit();
-        }
-        $user_info_data = array(
-            'userId'    => $userId,
-            'level'     => 1,
-            'ctime'     => time(),
-            'registTime'=> time()
-        );
-        $ret = $this->readdb->insert('user_info', $user_info_data);
-        if ($ret) {
-            $return_data = array(
-                'status'   => 0,
-                'msg'      => '用户绑定成功',
-                'openid'  => $openid,
+        } else {
+            $this->readdb->insert('user', $user_data);
+            $userId = $this->readdb->insert_id();
+            if (!$userId) {
+                $return_data = array(
+                    'status'    => -1,
+                    'msg'       => '用户绑定失败'
+                );
+                echo json_encode($return_data);
+                exit();
+            }
+            $user_info_data = array(
+                'userId'    => $userId,
+                'level'     => 1,
+                'ctime'     => time(),
+                'registTime'=> time()
             );
-            echo json_encode($return_data);
-            exit();
+            $ret = $this->readdb->insert('user_info', $user_info_data);
+            if ($ret) {
+                $return_data = array(
+                    'status'   => 0,
+                    'msg'      => '用户绑定成功',
+                    'openid'  => $openid,
+                );
+                echo json_encode($return_data);
+                exit();
+            }
         }
-
-
     }
 }
