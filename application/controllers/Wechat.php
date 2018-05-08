@@ -67,7 +67,7 @@ class Wechat extends CI_Controller
             $ret = $this->readdb->insert('user_info', $user_info_data);
             if ($ret) {
                 $return_data = array(
-                    'status'   => 0,
+                    'status'   => 1,
                     'msg'      => '用户绑定成功',
                     'openid'  => $openid,
                 );
