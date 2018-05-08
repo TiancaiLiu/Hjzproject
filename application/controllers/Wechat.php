@@ -39,7 +39,7 @@ class Wechat extends CI_Controller
 
         $this->readdb->insert('user', $user_data);
         $userId = $this->readdb->insert_id();
-        if ($userId) {
+        if (!$userId) {
             $return_data = array(
                 'status'    => -1,
                 'msg'       => '用户绑定失败'
